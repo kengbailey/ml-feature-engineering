@@ -13,7 +13,8 @@ gmaps_api_key = os.environ['GMAPS_API_KEY']
 
 class FetchZipCodes(threading.Thread):
     """
-    Thread fetching zipcodes, given dict of lat/long values
+    Thread fetching zipcodes, given dict of lat/long values.
+    Returns a dict of zipcode values.
     """
 
     def __init__(self, in_dict, out_dict, tLock):
