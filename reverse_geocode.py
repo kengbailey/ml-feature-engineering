@@ -26,6 +26,8 @@ class FetchZipCodes(threading.Thread):
 
     def run(self):
         for key, val in self.in_dict.items():
+            result = None
+            zipcode = '00000'
             if val[0] != 0 and val[1] != 0:
                 try:
                     result = self.gmaps.reverse_geocode((str(val[0]), str(val[1])))
@@ -33,16 +35,14 @@ class FetchZipCodes(threading.Thread):
                     print(e)
                     pass
         
-            if result:
+            if result != None:
                 for item in result[0]['address_components']:
                     if 'postal_code' in item['types']:
                         zipcode = str(item['long_name'])
                         break
 
-            with self.lock:
-                self.out_dict[key] = zipcode
-
-            zipcode = '00000'
+                with self.lock:
+                    self.out_dict[key] = zipcode
 
 if __name__ == "__main__":
     
